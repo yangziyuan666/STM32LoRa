@@ -49,3 +49,14 @@
 
 ## 说明（路径更正）
 - 你提到的“更新.md”按本次约定统一记录在：`E:\QianSai\MIGRATION_PROGRESS.md`。
+## WG_ChuangKouPing 阶段验收（2026-03-08）
+### 结果
+1. 已完成 WG_ChuangKouPing 在 F407 上的串口屏移植并联调通过。
+2. 串口屏业务口固定为 USART6（PC6/PC7，9600，8N1），与 4G/NB 的 UART5 业务口隔离。
+3. 已完成主页面状态与计数项刷新闭环（FALL/VCC/PIR + P/H/W）。
+4. 与现有 LoRa、树莓派、4G/NB 业务链路可共存运行。
+
+### 当前稳定配置
+1. 串口屏：USART6（PC6 TX / PC7 RX，9600，8N1）。
+2. 4G/NB：UART5（保持既有稳定配置，不占用串口屏口）。
+3. 工程与 IOC 一致：main.c/usart.c/usart.h、WG_TianWen.uvprojx、WG_TianWen.ioc 已同步。

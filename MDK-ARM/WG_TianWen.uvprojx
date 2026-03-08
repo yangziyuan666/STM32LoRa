@@ -337,7 +337,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32F407xx</Define>
               <Undefine></Undefine>
-              <IncludePath>../Core/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;../HARDWARE;../HARDWARE/BOBAO;../HARDWARE/JIEXI;../HARDWARE/LORA;../HARDWARE/OLED;../HARDWARE/SHUMEIPAI;../HARDWARE/LTE4G;../HARDWARE/NBLOT</IncludePath>
+              <IncludePath>../Core/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;../HARDWARE;../HARDWARE/BOBAO;../HARDWARE/JIEXI;../HARDWARE/LORA;../HARDWARE/OLED;../HARDWARE/SHUMEIPAI;../HARDWARE/LTE4G;../HARDWARE/NBLOT;../HARDWARE/TJC</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -723,6 +723,11 @@
               <FileName>nb_mn316.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\HARDWARE\NBLOT\nb_mn316.c</FilePath>
+            </File>
+            <File>
+              <FileName>tjc_hmi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\HARDWARE\TJC\tjc_hmi.c</FilePath>
             </File>
           </Files>
         </Group>

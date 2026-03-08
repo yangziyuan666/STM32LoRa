@@ -31,6 +31,7 @@
 #include "bobao.h"
 #include "lte_api.h"
 #include "lte_onenet.h"
+#include "tjc_hmi.h"
 #include <string.h>
 #include <stdio.h>
 /* USER CODE END Includes */
@@ -107,6 +108,7 @@ int main(void)
   MX_USART2_UART_Init();
   MX_USART3_UART_Init();
   MX_UART5_Init();
+  MX_USART6_UART_Init();
   /* USER CODE BEGIN 2 */
   u2_BuffInit();
   LoRa_Init();
@@ -155,6 +157,14 @@ int main(void)
       char pi_buf[24];
       ShumeiPi_GetCounts(&pi_counts);
       sprintf(pi_buf, "P:%u H:%u W:%u", pi_counts.person, pi_counts.half, pi_counts.work);
+      TJC_UpdateMainPage(
+        GW_Status_ToStr(GW_Status_GetFall()),
+        GW_Status_ToStr(GW_Status_GetVcc()),
+        GW_Status_ToStr(GW_Status_GetPir()),
+        pi_counts.person,
+        pi_counts.half,
+        pi_counts.work
+      );
       {
         tri_state_t tfall = GW_Status_GetFall();
         tri_state_t tvcc  = GW_Status_GetVcc();
@@ -327,3 +337,5 @@ void assert_failed(uint8_t *file, uint32_t line)
   /* USER CODE END 6 */
 }
 #endif /* USE_FULL_ASSERT */
+
+
