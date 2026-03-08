@@ -1,0 +1,20 @@
+﻿# Keil build outputs
+MDK-ARM/WG_TianWen/
+*.axf
+*.hex
+*.map
+*.o
+*.d
+*.crf
+*.htm
+*.lnp
+*.dep
+*.iex
+
+# IDE user files
+*.uvguix.*
+
+# OS
+Thumbs.db
+.DS_Store
+
