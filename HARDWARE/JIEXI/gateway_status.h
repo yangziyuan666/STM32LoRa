@@ -27,6 +27,10 @@ void GW_Status_ProcessText(const uint8_t* data, uint16_t len);
 tri_state_t GW_Status_GetFall(void);
 tri_state_t GW_Status_GetVcc(void);
 tri_state_t GW_Status_GetPir(void);
+uint16_t GW_Status_GetHr(void);
+uint16_t GW_Status_GetSpo2(void);
+uint8_t GW_Status_HrValid(void);
+uint8_t GW_Status_Spo2Valid(void);
 
 /**
  * @brief  °Ñ×´Ì¬×ª³É×Ö·û´® "True/False/Unknown"
@@ -38,3 +42,4 @@ const char* GW_Status_ToStr(tri_state_t st);
 #endif
 
 #endif
+

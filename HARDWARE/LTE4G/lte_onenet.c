@@ -28,12 +28,15 @@ typedef struct {
     uint32_t person;
     uint32_t half;
     uint32_t work;
+    uint32_t hr;
+    uint32_t spo2;
 } onenet_data_t;
 
 static volatile onenet_data_t g_data = {0};
 
 void LTE_Onenet_UpdateData(uint8_t fall, uint8_t pir, uint8_t vcc,
-                           uint32_t person, uint32_t half, uint32_t work)
+                           uint32_t person, uint32_t half, uint32_t work,
+                           uint32_t hr, uint32_t spo2)
 {
     g_data.fall = fall;
     g_data.pir = pir;
@@ -41,6 +44,8 @@ void LTE_Onenet_UpdateData(uint8_t fall, uint8_t pir, uint8_t vcc,
     g_data.person = person;
     g_data.half = half;
     g_data.work = work;
+    g_data.hr = hr;
+    g_data.spo2 = spo2;
 }
 
 void LTE_Onenet_Init(void)
@@ -153,7 +158,9 @@ void LTE_Onenet_Run(void)
                 "\"FALL\":{\"value\":%s},"
                 "\"person\":{\"value\":%lu},"
                 "\"half\":{\"value\":%lu},"
-                "\"work\":{\"value\":%lu}"
+                "\"work\":{\"value\":%lu},"
+                "\"HR\":{\"value\":%lu},"
+                "\"SPO2\":{\"value\":%lu}"
             "}}",
             (unsigned long)g_msg_id++,
             g_data.pir  ? "true" : "false",
@@ -161,7 +168,9 @@ void LTE_Onenet_Run(void)
             g_data.fall ? "true" : "false",
             (unsigned long)g_data.person,
             (unsigned long)g_data.half,
-            (unsigned long)g_data.work);
+            (unsigned long)g_data.work,
+            (unsigned long)g_data.hr,
+            (unsigned long)g_data.spo2);
 
     if (n <= 0 || n >= (int)sizeof(payload))
     {

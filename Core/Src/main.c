@@ -61,6 +61,8 @@ static uint32_t oled_last_tick = 0;
 static char oled_fall_last[24] = "";
 static char oled_vcc_last[24] = "";
 static char oled_pir_last[24] = "";
+static char oled_hr_last[16] = "";
+static char oled_spo2_last[16] = "";
 static char oled_pi_last[24] = "";
 static uint8_t g_lte_enabled = 0;
 /* USER CODE END PV */
@@ -148,11 +150,17 @@ int main(void)
       char fall_buf[24];
       char vcc_buf[24];
       char pir_buf[24];
+      char hr_buf[16];
+      char spo2_buf[16];
       oled_last_tick = HAL_GetTick();
 
       sprintf(fall_buf, "FALL:%-8s", GW_Status_ToStr(GW_Status_GetFall()));
       sprintf(vcc_buf,  "VCC :%-8s", GW_Status_ToStr(GW_Status_GetVcc()));
       sprintf(pir_buf,  "PIR :%-8s", GW_Status_ToStr(GW_Status_GetPir()));
+      if (GW_Status_HrValid()) sprintf(hr_buf,   "HR:%3u",   GW_Status_GetHr());
+      else                     sprintf(hr_buf,   "HR:--");
+      if (GW_Status_Spo2Valid()) sprintf(spo2_buf, "SPO2:%3u", GW_Status_GetSpo2());
+      else                       sprintf(spo2_buf, "SPO2:--");
       ShumeiPi_Counts_t pi_counts;
       char pi_buf[24];
       ShumeiPi_GetCounts(&pi_counts);
@@ -191,7 +199,9 @@ int main(void)
             (tvcc == ST_TRUE) ? 1 : 0,
             pi_counts.person,
             pi_counts.half,
-            pi_counts.work
+            pi_counts.work,
+            GW_Status_HrValid() ? GW_Status_GetHr() : 0,
+            GW_Status_Spo2Valid() ? GW_Status_GetSpo2() : 0
           );
           LTE_Onenet_Run();
         }
@@ -199,25 +209,39 @@ int main(void)
 
       if (strcmp(fall_buf, oled_fall_last) != 0)
       {
-        OLED_ShowString(0, 0, (uint8_t *)fall_buf, 16);
+        OLED_ShowString(0, 0, (uint8_t *)fall_buf, 8);
         strcpy(oled_fall_last, fall_buf);
       }
 
       if (strcmp(vcc_buf, oled_vcc_last) != 0)
       {
-        OLED_ShowString(0, 2, (uint8_t *)vcc_buf, 16);
+        OLED_ShowString(0, 1, (uint8_t *)vcc_buf, 8);
         strcpy(oled_vcc_last, vcc_buf);
       }
 
       if (strcmp(pir_buf, oled_pir_last) != 0)
       {
-        OLED_ShowString(0, 4, (uint8_t *)pir_buf, 16);
+        OLED_ShowString(0, 2, (uint8_t *)pir_buf, 8);
         strcpy(oled_pir_last, pir_buf);
+      }
+
+      if (strcmp(hr_buf, oled_hr_last) != 0)
+      {
+        OLED_ShowString(0, 3, (uint8_t *)"                ", 8);
+        OLED_ShowString(0, 3, (uint8_t *)hr_buf, 16);
+        strcpy(oled_hr_last, hr_buf);
+      }
+
+      if (strcmp(spo2_buf, oled_spo2_last) != 0)
+      {
+        OLED_ShowString(0, 5, (uint8_t *)"                ", 8);
+        OLED_ShowString(0, 5, (uint8_t *)spo2_buf, 16);
+        strcpy(oled_spo2_last, spo2_buf);
       }
 
       if (strcmp(pi_buf, oled_pi_last) != 0)
       {
-        OLED_ShowString(0, 6, (uint8_t *)pi_buf, 16);
+        OLED_ShowString(0, 7, (uint8_t *)pi_buf, 8);
         strcpy(oled_pi_last, pi_buf);
       }
     }
@@ -337,5 +361,4 @@ void assert_failed(uint8_t *file, uint32_t line)
   /* USER CODE END 6 */
 }
 #endif /* USE_FULL_ASSERT */
-
 
